@@ -20,14 +20,18 @@ public class GenerateFloor : MonoBehaviour
         int xOffset = x / 2;
         int yOffset = y / 2;
 
+        // SỬA LẠI GenerateFloor.cs
         for (int i = -xOffset; i <= xOffset; i++)
         {
             for (int j = -yOffset; j <= yOffset; j++)
             {
                 GameObject tilePrefab = ((i + j) % 2 == 0) ? floorTileWhite : floorTileBlack;
 
-                Instantiate(tilePrefab, new Vector3(i * tileSize, -1, j * tileSize), Quaternion.identity);
-                tilePrefab.transform.parent = this.transform;
+                // Lưu instance đã spawn
+                GameObject spawnedTile = Instantiate(tilePrefab, new Vector3(i * tileSize, -1, j * tileSize), Quaternion.identity);
+
+                // Set parent cho INSTANCE, không phải prefab gốc
+                spawnedTile.transform.parent = this.transform;
             }
         }
 
@@ -38,21 +42,24 @@ public class GenerateFloor : MonoBehaviour
 
     void SpawnBorderTiles(int xOffset, int yOffset)
     {
-        // Define the height of the border tiles
         float borderHeight = 0.6f;
 
-        // Create border tiles on the X-axis
-        for (int i = -xOffset ; i <= xOffset; i++)
+        for (int i = -xOffset; i <= xOffset; i++)
         {
-            Instantiate(BorderPrefab, new Vector3(i * tileSize, borderHeight / 2, yOffset * tileSize), Quaternion.identity);
-            Instantiate(BorderPrefab, new Vector3(i * tileSize, borderHeight / 2, -yOffset * tileSize), Quaternion.identity);
+            GameObject topBorder = Instantiate(BorderPrefab, new Vector3(i * tileSize, borderHeight / 2, yOffset * tileSize), Quaternion.identity);
+            topBorder.transform.parent = this.transform;
+
+            GameObject bottomBorder = Instantiate(BorderPrefab, new Vector3(i * tileSize, borderHeight / 2, -yOffset * tileSize), Quaternion.identity);
+            bottomBorder.transform.parent = this.transform;
         }
 
-        // Create border tiles on the Y-axis
         for (int j = -yOffset; j <= yOffset; j++)
         {
-            Instantiate(BorderPrefab, new Vector3(xOffset * tileSize, borderHeight / 2, j * tileSize), Quaternion.identity);
-            Instantiate(BorderPrefab, new Vector3(-xOffset * tileSize, borderHeight / 2, j * tileSize), Quaternion.identity);
+            GameObject rightBorder = Instantiate(BorderPrefab, new Vector3(xOffset * tileSize, borderHeight / 2, j * tileSize), Quaternion.identity);
+            rightBorder.transform.parent = this.transform;
+
+            GameObject leftBorder = Instantiate(BorderPrefab, new Vector3(-xOffset * tileSize, borderHeight / 2, j * tileSize), Quaternion.identity);
+            leftBorder.transform.parent = this.transform;
         }
     }
 }
