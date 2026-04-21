@@ -26,8 +26,8 @@ public class GenerateFloor : MonoBehaviour
             {
                 GameObject tilePrefab = ((i + j) % 2 == 0) ? floorTileWhite : floorTileBlack;
 
-                Instantiate(tilePrefab, new Vector3(i * tileSize, -1, j * tileSize), Quaternion.identity);
-                tilePrefab.transform.parent = this.transform;
+                GameObject tileInstance = Instantiate(tilePrefab, new Vector3(i * tileSize, -1, j * tileSize), Quaternion.identity);
+                tileInstance.transform.parent = this.transform;
             }
         }
 
