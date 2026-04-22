@@ -8,7 +8,7 @@ public class GenerateFloor : MonoBehaviour
     public GameObject floorTileBlack;
     public GameObject BorderPrefab;
     public int x, y;
-    public float tileSize = 1.0f; // Adjust the size of each tile
+    public float tileSize = 1.0f;
 
     private void Awake()
     {
@@ -20,22 +20,22 @@ public class GenerateFloor : MonoBehaviour
         int xOffset = x / 2;
         int yOffset = y / 2;
 
-        // SỬA LẠI GenerateFloor.cs
+        
         for (int i = -xOffset; i <= xOffset; i++)
         {
             for (int j = -yOffset; j <= yOffset; j++)
             {
                 GameObject tilePrefab = ((i + j) % 2 == 0) ? floorTileWhite : floorTileBlack;
 
-                // Lưu instance đã spawn
+               
                 GameObject spawnedTile = Instantiate(tilePrefab, new Vector3(i * tileSize, -1, j * tileSize), Quaternion.identity);
 
-                // Set parent cho INSTANCE, không phải prefab gốc
+                
                 spawnedTile.transform.parent = this.transform;
             }
         }
 
-        // Spawn border tiles with a height of 3 units
+        
         SpawnBorderTiles(xOffset, yOffset);
         DontDestroyOnLoad(this.gameObject);
     }

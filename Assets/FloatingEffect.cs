@@ -19,17 +19,15 @@ public class FloatingEffect : MonoBehaviour
     [Tooltip("Có xoay theo trục Y không")]
     public bool rotateY = true;
 
-    // Vị trí ban đầu khi spawn
     private Vector3 startPosition;
     private float phaseOffset;
     private float elapsedTime;
 
     void Start()
     {
-        // Lưu vị trí ban đầu (vị trí tile)
+
         startPosition = transform.position;
 
-        // Random phase để mỗi food dao động khác nhau
         phaseOffset = randomPhase ? Random.Range(0f, Mathf.PI * 2) : 0f;
     }
 
@@ -37,11 +35,9 @@ public class FloatingEffect : MonoBehaviour
     {
         elapsedTime += Time.deltaTime;
 
-        // Hiệu ứng lơ lửng lên xuống theo hình sin
         float yOffset = Mathf.Sin((elapsedTime * floatSpeed) + phaseOffset) * floatHeight;
         transform.position = startPosition + new Vector3(0f, yOffset, 0f);
 
-        // Hiệu ứng xoay nhẹ (tùy chọn)
         if (rotateY)
         {
             transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime, Space.World);
